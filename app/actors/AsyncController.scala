@@ -10,30 +10,30 @@ import com.google.gson.Gson
 import play.db.jpa._
 
 trait AsyncController extends ScalateController {
-  private val longProcessActor = Actor.actorOf[LongProcessActor]
+    private val longProcessActor = Actor.actorOf[LongProcessActor]
+    
+    protected def async(longProcess: () => Any) = {
+      longProcessActor ! Spawn(true, longProcess, "session_proc_id")
+    }
 
-	protected def async(longProcess: () => Any) = {
-		longProcessActor ! Spawn(true, longProcess, "popo")
-	}
+    protected def asyncWithFuture(longProcess: () => Any): Future[Any] = {
+        return longProcessActor !!! Spawn(false, longProcess, "session_proc_id")
+    }
 
-  protected def asyncWithFuture(longProcess: () => Any): Future[Any] = {
-    return longProcessActor !!! Spawn(false, longProcess, "pipo")
-  }
-
-	def renderAsyncResponse(procId: String) = {
-		Logger.debug("In renderAsyncResponse ****************")
-		Cache.get[Any](procId) match {
-			case s: Option[String] => Json(s)
-			case e: Exception => Error(e.getMessage())
-			case _ => NoContent
-		}
-
-		Cache.delete(procId)
-	}
+    def renderAsyncResponse(procId: String) = {
+        Logger.debug("In renderAsyncResponse ****************")
+        Cache.get[Any](procId) match {
+            case s: Option[String] => Json(s)
+            case e: Exception => Error(e.getMessage())
+            case _ => NoContent
+        }
+    
+        Cache.delete(procId)
+    }
 
 	// longProcessResponse can also be an exception message
     private def storeInCache(processOutput: Any, procId: String) = {
-        Cache.set(procId, processOutput, "4mn")
+        Cache.set(procId, processOutput, "1mn")
     }   
 }
 

@@ -8,14 +8,14 @@ import com.restfb.types.{User => FBUser}
 import models._
 import actors._
 
-//object Users extends ScalateController with AsyncController {
-object Users extends ScalateController {
+object Users extends ScalateController with AsyncController {
+//object Users extends ScalateController {
     def index {
 //		var con: FBUser
 
-//		async {
+		async {
 			val user = User.find("fbClientId","2227470867").fetch().head
-//		}
+		}
 /*		async {
 			val facebookClient = new DefaultFacebookClient(User.find("fbClientId","2227470867").fetch().head.fbAccessToken)
 
