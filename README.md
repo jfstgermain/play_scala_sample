@@ -13,7 +13,7 @@ Squeezing as much juice out of the http request
 
 Depending on network capabilities and physical location, the client waits for steps to execute in a sequential order. For its request to be received by the server, for the business logic to execute, for the view to get built and for the response to return.
 
-In some cases, when it could apply, it could be interesting to skip most of this and parallelize some of the steps while waiting for a response page. When a request hits the server, a cached view, empty of all data would be returned immediately before any processing has started. In parallel, the whole pertaining business logic could be executed with its result stored in a cache. The partial view would then perform an ajax call in order to retrieve the data stored in the cache for that request ID. (see this as the "Future" actor concept applied to http requests). FB does something similar \<paste link here\> Sofea / SOUI style.
+In some cases, when it could apply, it could be interesting to skip most of this and parallelize some of the steps while waiting for a response page. When a request hits the server, a cached view, empty of all data would be returned immediately before any processing has started. In parallel, the whole pertaining business logic could be executed with its result stored in a cache. The partial view would then perform an ajax call in order to retrieve the data stored in the cache for that request ID. (see this as a "[Futures](http://en.wikipedia.org/wiki/Futures_and_promises)" actor concept applied to http requests). FB does something similar \<paste link here\> Sofea / SOUI style.
 
 Advantages
 ----------
